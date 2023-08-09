@@ -7,6 +7,11 @@ import pickle
 import json
 import os
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 class FileStorage:
     """Class to store data in files."""
@@ -32,8 +37,9 @@ class FileStorage:
     def save(self):
         """Serializes __objects to the JSON file
         """
+        serialized_objs = {key: obj.to_dict() for key, obj in self.__objects.items()}
         with open(self.__file_path, "wb") as file:
-            pickle.dump(self.__objects, file)
+            pickle.dump(serialized_objs, file)
 
     def reload(self):
         """_summary_
@@ -42,7 +48,19 @@ class FileStorage:
             with open(self.__file_path, "rb") as file:
                 try:
                     loaded_objs = pickle.load(file)
+                    class_references = {
+                        "User": User,
+                        "Place": Place,
+                        "State": State,
+                        "City": City,
+                        "Amenity": Amenity,
+                        "Review": Review
+                    }
                     for key, obj in loaded_objs.items():
-                        self.__objects[key] = obj
+                        class_name, obj_id = key.split('.')
+                        class_ref = class_references.get(class_name) or User
+                        if class_ref:
+                            obj_instance = class_ref(**obj)
+                            self.__objects[key] = obj_instance
                 except pickle.UnpicklingError:
                     pass

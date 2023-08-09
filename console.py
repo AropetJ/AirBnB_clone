@@ -34,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
 
         if args:
             class_name = args.split()[0]
-            if class_name not in ["BaseModel", "User"]:
+            if class_name not in ["BaseModel", "User", "Place", "City", "Amenity", "Review"]:
                 print("** class doesn't exist **")
                 return
     
@@ -52,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
     
         if args_list:
             class_name = args.split()[0]
-            if class_name not in ["BaseModel", "User"]:
+            if class_name not in ["BaseModel", "User", "Place", "City", "Amenity", "Review"]:
                 print("** class doesn't exist **")
                 return
             if len(args_list) < 2:
@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
             return
         if args_list:
             class_name = args_list[0]
-            if class_name not in ["BaseModel", "User"]:
+            if class_name not in ["BaseModel", "User", "Place", "City", "Amenity", "Review"]:
                 print("** class doesn't exist **")
                 return
             if len(args_list) < 2:
