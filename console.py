@@ -7,6 +7,7 @@ import shlex
 from models.base_model import BaseModel
 from models import storage
 from datetime import datetime
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
@@ -33,11 +34,11 @@ class HBNBCommand(cmd.Cmd):
 
         if args:
             class_name = args.split()[0]
-            if class_name not in ["BaseModel"]:
+            if class_name not in ["BaseModel", "User"]:
                 print("** class doesn't exist **")
                 return
     
-        new_instance = BaseModel()
+        new_instance = class_name()
         new_instance.save()
         print(new_instance.id)
 
@@ -51,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
     
         if args_list:
             class_name = args.split()[0]
-            if class_name not in ["BaseModel"]:
+            if class_name not in ["BaseModel", "User"]:
                 print("** class doesn't exist **")
                 return
             if len(args_list) < 2:
@@ -74,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
             return
         if args_list:
             class_name = args_list[0]
-            if class_name not in ["BaseModel"]:
+            if class_name not in ["BaseModel", "User"]:
                 print("** class doesn't exist **")
                 return
             if len(args_list) < 2:
