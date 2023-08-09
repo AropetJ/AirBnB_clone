@@ -4,7 +4,9 @@
 
 import uuid
 import pickle
+import json
 import os
+from models.user import User
 
 class FileStorage:
     """Class to store data in files."""
@@ -39,6 +41,8 @@ class FileStorage:
         if os.path.exists(self.__file_path):
             with open(self.__file_path, "rb") as file:
                 try:
-                    self.__objects = pickle.load(file)
+                    loaded_objs = pickle.load(file)
+                    for key, obj in loaded_objs.items():
+                        self.__objects[key] = obj
                 except pickle.UnpicklingError:
                     pass
