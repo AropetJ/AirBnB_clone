@@ -3,11 +3,17 @@
 
 import cmd
 import os
+import sys
 import shlex
 from models.base_model import BaseModel
 from models import storage
 from datetime import datetime
 from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
@@ -138,5 +144,16 @@ class HBNBCommand(cmd.Cmd):
         except:
             print("** class does not exist **")
 
+def main():
+    if not sys.stdin.isatty():
+        hbnb_cmd = HBNBCommand()
+    for line in sys.stdin:
+        line = line.strip()
+        if line:
+            hbnb_cmd.onecmd(line)
+    else:
+        HBNBCommand().cmdloop()
+
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    main()
+    

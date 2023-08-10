@@ -3,7 +3,7 @@
 """Define a class BaseModel"""
 import uuid
 from datetime import datetime
-from models import storage
+import models
 
 class BaseModel():
     """My base class that deines all common attributes/methods

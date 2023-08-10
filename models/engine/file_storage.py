@@ -6,6 +6,7 @@ import uuid
 import pickle
 import json
 import os
+from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -47,20 +48,8 @@ class FileStorage:
         if os.path.exists(self.__file_path):
             with open(self.__file_path, "rb") as file:
                 try:
-                    loaded_objs = pickle.load(file)
-                    class_references = {
-                        "User": User,
-                        "Place": Place,
-                        "State": State,
-                        "City": City,
-                        "Amenity": Amenity,
-                        "Review": Review
-                    }
-                    for key, obj in loaded_objs.items():
-                        class_name, obj_id = key.split('.')
-                        class_ref = class_references.get(class_name) or User
-                        if class_ref:
-                            obj_instance = class_ref(**obj)
-                            self.__objects[key] = obj_instance
+                    self.__objects = pickle.load(file)
+                except pickle.UnpicklingError:
+                    pass
                 except pickle.UnpicklingError:
                     pass
